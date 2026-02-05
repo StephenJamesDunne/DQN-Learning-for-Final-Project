@@ -22,10 +22,37 @@
     <Filter Include="Resource Files\AUDIO">
       <UniqueIdentifier>{8389fe52-4a9c-4634-a901-3339082136d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Environment">
+      <UniqueIdentifier>{dd5eb312-64e9-4e3b-85ee-cd0f438d45d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Agents">
+      <UniqueIdentifier>{02079081-0b77-420d-adb3-16909a78095c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Training">
+      <UniqueIdentifier>{e39e5d61-9a4c-404c-b1f3-1186a076cd6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Environment">
+      <UniqueIdentifier>{db6005a2-0a45-4f76-add0-c08ec767fee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Agents">
+      <UniqueIdentifier>{2b1ad2ec-b211-4cb9-bb46-b6fc82320ea4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Training">
+      <UniqueIdentifier>{f90cbfef-6eda-4252-ad11-9a480a7d8eca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GridWorld.cpp">
+      <Filter>Source Files\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="QLearningAgent.cpp">
+      <Filter>Source Files\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="Trainer.cpp">
+      <Filter>Source Files\Training</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,5 +69,19 @@
     <Media Include="ASSETS\AUDIO\beep.wav">
       <Filter>Resource Files\AUDIO</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Position.h">
+      <Filter>Header Files\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="GridWorld.h">
+      <Filter>Header Files\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="QLearningAgent.h">
+      <Filter>Header Files\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Trainer.h">
+      <Filter>Header Files\Training</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
