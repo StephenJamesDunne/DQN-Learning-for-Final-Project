@@ -17,6 +17,49 @@ First steps here are to implement basic q-value tabulating and applying the valu
 - Epsilon, the rate at which the agent will explore random actions instead of exploiting rewarding actions.
     - Epsilon greedy policy w/ epsilon decay means the agent will start off taking more exploratory actions and gradually decay to exploiting more often.
 
+# Data Flow
+```mermaid
+flowchart TD
+    Start([Program Start]) --> Main[main.cpp]
+    Main --> TrainCall[Call Trainer::train_qlearning<br/>episodes=2000, verbose=true]
+    
+    TrainCall --> CreateEnv[Create GridWorld env<br/>8x8 grid, goal at 7,7]
+    TrainCall --> CreateAgent[Create QLearningAgent<br/>α=0.1, γ=0.99, ε=0.5]
+    
+    CreateEnv --> TrainLoop{Episode Loop<br/>0 to 2000}
+    CreateAgent --> TrainLoop
+    
+    TrainLoop -->|Each Episode| Reset[env.reset<br/>Start at 0,0]
+    Reset --> StepLoop{Step Loop<br/>Max 200 steps}
+    
+    StepLoop -->|Each Step| ChooseAction[agent.choose_action<br/>ε-greedy policy]
+    ChooseAction --> EnvStep[env.step<br/>Execute action]
+    EnvStep --> Update[agent.update<br/>Bellman equation]
+    Update --> CheckDone{Reached<br/>Goal?}
+    
+    CheckDone -->|No| NextStep[state = next_state]
+    NextStep --> StepLoop
+    CheckDone -->|Yes| DecayEps[agent.decay_epsilon<br/>ε *= 0.995]
+    
+    DecayEps --> Print{Episode % 100<br/>== 0?}
+    Print -->|Yes| PrintProgress[Print progress stats]
+    Print -->|No| NextEpisode
+    PrintProgress --> NextEpisode[Next Episode]
+    NextEpisode --> TrainLoop
+    
+    TrainLoop -->|Done| ReturnAgent[Return trained agent<br/>with filled Q-table]
+    ReturnAgent --> TestCall[Call Trainer::test_policy]
+    TestCall --> TestLoop{Test Episodes<br/>ε=0.0}
+    TestLoop --> ShowResults[Display test results]
+    ShowResults --> End([Program End])
+    
+    style Main fill:#e1f5ff
+    style TrainLoop fill:#fff4e1
+    style StepLoop fill:#ffe1e1
+    style Update fill:#e1ffe1
+    style ReturnAgent fill:#f0e1ff
+```
+
 ## Bellman Equation as it relates to Gridworld:
 
 ### newQValue = currentQValue + alpha(reward + gamma * maxNextQValue - currentQValue)
