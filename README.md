@@ -20,3 +20,12 @@ First steps here are to implement basic q-value tabulating and applying the valu
 ## Bellman Equation as it relates to Gridworld:
 
 ### newQValue = currentQValue + alpha(reward + gamma * maxNextQValue - currentQValue)
+
+## Learning output after 2000 episodes of traning Q-Learning Agent to play Gridworld:
+![Output of Gridworld Q-Learning Agent](image.png)
+
+## Best actions policy applied to 8x8 grid (agent always starts at 0, 0):
+![Output of completed training for Gridworld Q-Learning Agent](image-1.png)
+
+## Applying tabulated Q-learning outcomes after 2000 episodes to a fresh agent. Fresh agent always takes shortest 14 steps to goal!
+![Output of new agent playing Gridworld applying learned knowledge](image-2.png)
