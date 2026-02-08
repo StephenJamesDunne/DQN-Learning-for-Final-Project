@@ -11,43 +11,43 @@ public:
     /**
      * Train Q-Learning agent (from Phase 1)
      */
-    static QLearningAgent train_qlearning(int num_episodes = 2000,
+    static QLearningAgent trainQLearning(int numEpisodes = 2000,
         bool verbose = true);
 
     /**
      * Train DQN agent with neural network
      */
-    static DQNAgent train_dqn(int num_episodes = 5000,
+    static DQNAgent trainDQN(int numEpisodes = 5000,
         bool verbose = true);
 
     /**
      * Test Q-Learning agent's policy
      */
-    static void test_policy(QLearningAgent& agent,
+    static void testPolicy(QLearningAgent& agent,
         GridWorld& env,
-        int num_episodes = 10);
+        int numEpisodes = 10);
 
     /**
      * Test DQN agent's policy
      */
-    static void test_dqn_policy(DQNAgent& agent,
+    static void testDQNPolicy(DQNAgent& agent,
         GridWorld& env,
-        int num_episodes = 10);
+        int numEpisodes = 10);
 
 private:
     /**
      * Print training progress for Q-Learning
      */
-    static void print_progress(int episode,
-        const std::vector<double>& episode_rewards,
+    static void printProgress(int episode,
+        const std::vector<double>& episodeRewards,
         int steps,
         double epsilon);
 
     /**
      * Print training progress for DQN
      */
-    static void print_dqn_progress(int episode,
-        const std::vector<double>& episode_rewards,
+    static void printDQNProgress(int episode,
+        const std::vector<double>& episodeRewards,
         int steps,
         double epsilon,
         const DQNAgent& agent);

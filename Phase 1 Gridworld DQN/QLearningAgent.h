@@ -14,12 +14,12 @@
 
 class QLearningAgent {
 private:
-    std::map<std::pair<Position, Action>, double> q_table;
+    std::map<std::pair<Position, Action>, double> qTable;
     double alpha;   
     double gamma;   
     double epsilon; 
     std::mt19937 rng;
-    std::uniform_real_distribution<double> uniform_dist;
+    std::uniform_real_distribution<double> uniformDist;
 
 public:
 	// Constructor with default hyperparameters
@@ -28,10 +28,10 @@ public:
         double exploration = 0.5);
 
 	// Get Q-value for a given state-action pair (returns 0 if not present)
-    double get_q(const Position& state, Action action) const;
+    double getQ(const Position& state, Action action) const;
 
 	// Choose action using epsilon-greedy policy
-    Action choose_action(const Position& state);
+    Action chooseAction(const Position& state);
 
 	// Updates Q-table based on the observed transition (state, action, reward, next_state)
 	// Uses the Bellman equation: newQValue = currentQValue + alpha(reward + gamma * maxNextQValue - currentQValue)
@@ -40,14 +40,14 @@ public:
 
 	// Decay the exploration rate (epsilon) after each episode to reduce exploration over time
 	// Ideally should default to exploitation (epsilon=0) after enough episodes
-    void decay_epsilon(double decay_rate = 0.995, double min_epsilon = 0.01);
+    void decayEpsilon(double decay_rate = 0.995, double min_epsilon = 0.01);
 
 	// Print the learned policy (best action at each position) in a grid format
-    void print_policy(int grid_size) const;
+    void printPolicy(int grid_size) const;
 
 	// Print the Q-values for all state-action pairs in a readable format
-    void print_q_values(int grid_size) const;
+    void printQValues(int grid_size) const;
 
-    double get_epsilon() const { return epsilon; }
-    void set_epsilon(double new_epsilon) { epsilon = new_epsilon; }
+    double getEpsilon() const { return epsilon; }
+    void setEpsilon(double new_epsilon) { epsilon = new_epsilon; }
 };

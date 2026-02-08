@@ -12,7 +12,7 @@
 class NeuralNetwork {
 private:
     // Network architecture
-    std::vector<int> layer_sizes;
+    std::vector<int> layerSizes;
 
     // Weights[layer][neuron_out][neuron_in]
     std::vector<std::vector<std::vector<double>>> weights;
@@ -22,7 +22,7 @@ private:
 
     // Activations stored during forward pass (needed for backpropagation)
     std::vector<std::vector<double>> activations;
-    std::vector<std::vector<double>> z_values;  // Pre-activation values
+    std::vector<std::vector<double>> zValues;  // Pre-activation values
 
     std::mt19937 rng;
 
@@ -31,7 +31,7 @@ private:
         return std::max(0.0, x);
     }
 
-    double relu_derivative(double x) const {
+    double reluDerivative(double x) const {
         return x > 0 ? 1.0 : 0.0;
     }
 
@@ -49,11 +49,11 @@ public:
 	// Backward pass: update weights based on TD-error (target value - predicted Q-value)
     void backward(const std::vector<double>& input,
         int action,
-        double td_error,
-        double learning_rate);
+        double tdError,
+        double learningRate);
 
 	// Copy weights from another network (used for target network updates)
     void copyWeightsFrom(const NeuralNetwork& other);
 
-    size_t getLayerCount() const { return layer_sizes.size(); }
+    size_t getLayerCount() const { return layerSizes.size(); }
 };

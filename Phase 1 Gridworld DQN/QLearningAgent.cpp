@@ -9,19 +9,19 @@ QLearningAgent::QLearningAgent(double learning_rate,
     : alpha(learning_rate),
     gamma(discount),
     epsilon(exploration),
-    uniform_dist(0.0, 1.0) {
+    uniformDist(0.0, 1.0) {
     std::random_device rd;
     rng = std::mt19937(rd());
 }
 
-double QLearningAgent::get_q(const Position& state, Action action) const {
+double QLearningAgent::getQ(const Position& state, Action action) const {
     auto key = std::make_pair(state, action);
-    auto it = q_table.find(key);
+    auto it = qTable.find(key);
 
 	// If the state-action pair is not in the Q-table, return 1.0 for optimistic initialization
 	// Optimistic initialization: encourages the agent to explore new actions
 	// Basically tells agent to assume all actions are good until it learns otherwise, which promotes exploration
-    if (it == q_table.end()) {
+    if (it == qTable.end()) {
         return 1.0;
     }
 
@@ -29,20 +29,20 @@ double QLearningAgent::get_q(const Position& state, Action action) const {
     return it->second;
 }
 
-Action QLearningAgent::choose_action(const Position& state) {
+Action QLearningAgent::chooseAction(const Position& state) {
     // Exploration: random action
-    if (uniform_dist(rng) < epsilon) {
+    if (uniformDist(rng) < epsilon) {
         return static_cast<Action>(rng() % 4);
     }
 
     // Exploitation: choose best action
-    double best_q = get_q(state, UP);
+    double best_q = getQ(state, UP);
     Action best_action = UP;
 
 	// Check all actions to find the one with the highest Q-value
     for (int a = 1; a < 4; a++) {
         Action action = static_cast<Action>(a);
-        double q = get_q(state, action);
+        double q = getQ(state, action);
         if (q > best_q) {
             best_q = q;
             best_action = action;
@@ -55,41 +55,41 @@ Action QLearningAgent::choose_action(const Position& state) {
 void QLearningAgent::update(const Position& state, Action action,
     double reward, const Position& next_state) {
     // Current Q-value
-    double current_q = get_q(state, action);
+    double current_q = getQ(state, action);
 
     // Max Q-value for next state
-    double max_next_q = get_q(next_state, UP);
+    double max_next_q = getQ(next_state, UP);
     for (int a = 1; a < 4; a++) {
-        max_next_q = std::max(max_next_q, get_q(next_state, static_cast<Action>(a)));
+        max_next_q = std::max(max_next_q, getQ(next_state, static_cast<Action>(a)));
     }
 
     // Bellman equation: newQValue = currentQValue + alpha(reward + gamma * maxNextQValue - currentQValue)
     double new_q = current_q + alpha * (reward + gamma * max_next_q - current_q);
 
 	// Update Q-table with new Q-value for this state-action pair
-    q_table[std::make_pair(state, action)] = new_q;
+    qTable[std::make_pair(state, action)] = new_q;
 }
 
 // Epsilon needs to decay over time to allow the agent to shift from exploration to exploitation as it learns
 // This function reduces epsilon by multiplying it with a decay rate, but ensures it doesn't go below a minimum threshold
-void QLearningAgent::decay_epsilon(double decay_rate, double min_epsilon) {
+void QLearningAgent::decayEpsilon(double decay_rate, double min_epsilon) {
     epsilon = std::max(min_epsilon, epsilon * decay_rate);
 }
 
-void QLearningAgent::print_policy(int grid_size) const {
+void QLearningAgent::printPolicy(int grid_size) const {
     std::cout << "\nLearned Policy (best action at each position):\n";
 
     for (int y = 0; y < grid_size; y++) {
         for (int x = 0; x < grid_size; x++) {
             Position pos{ x, y };
             Action best_action = UP;
-            double best_q = get_q(pos, UP);
+            double best_q = getQ(pos, UP);
 
             // Find best action for this position
             for (int a = 1; a < 4; a++) {
                 Action action = static_cast<Action>(a);
-                if (get_q(pos, action) > best_q) {
-                    best_q = get_q(pos, action);
+                if (getQ(pos, action) > best_q) {
+                    best_q = getQ(pos, action);
                     best_action = action;
                 }
             }
@@ -115,17 +115,17 @@ void QLearningAgent::print_policy(int grid_size) const {
     }
 }
 
-void QLearningAgent::print_q_values(int grid_size) const {
+void QLearningAgent::printQValues(int grid_size) const {
     std::cout << "\nQ-Values at each position (showing max Q):\n";
 
     for (int y = 0; y < grid_size; y++) {
         for (int x = 0; x < grid_size; x++) {
             Position pos{ x, y };
-            double max_q = get_q(pos, UP);
+            double max_q = getQ(pos, UP);
 
             // Find max Q-value over all actions
             for (int a = 1; a < 4; a++) {
-                max_q = std::max(max_q, get_q(pos, static_cast<Action>(a)));
+                max_q = std::max(max_q, getQ(pos, static_cast<Action>(a)));
             }
 
 			// std:: fixed: always show (n) digits after decimal point

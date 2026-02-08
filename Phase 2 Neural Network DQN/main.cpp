@@ -27,10 +27,10 @@ void run_qlearning() {
     std::cout << "  - Updates using Bellman equation: Q(s,a) += alpha * [r + gamma*max(Q(s')) - Q(s,a)]\n";
     std::cout << "  - Fast to train but doesn't generalize to new states\n\n";
 
-    QLearningAgent agent = Trainer::train_qlearning(2000, true);
+    QLearningAgent agent = Trainer::trainQLearning(2000, true);
 
     GridWorld test_env(8);
-    Trainer::test_policy(agent, test_env, 10);
+    Trainer::testPolicy(agent, test_env, 10);
 
     std::cout << "\n\nPress Enter to continue...";
     std::cin.ignore();
@@ -62,10 +62,10 @@ void run_dqn() {
     std::cin.ignore();
     std::cin.get();
 
-    DQNAgent agent = Trainer::train_dqn(1000, true);
+    DQNAgent agent = Trainer::trainDQN(1000, true);
 
     GridWorld test_env(8);
-    Trainer::test_dqn_policy(agent, test_env, 10);
+    Trainer::testDQNPolicy(agent, test_env, 10);
 
     std::cout << "\n\nPress Enter to continue...";
     std::cin.get();
@@ -78,17 +78,17 @@ void run_both() {
 
     // Q-Learning
     std::cout << "--- PHASE 1: Q-Learning ---\n";
-    QLearningAgent q_agent = Trainer::train_qlearning(2000, true);
+    QLearningAgent q_agent = Trainer::trainQLearning(2000, true);
     GridWorld test_env_q(8);
-    Trainer::test_policy(q_agent, test_env_q, 10);
+    Trainer::testPolicy(q_agent, test_env_q, 10);
 
     std::cout << "\n\n";
 
     // DQN
     std::cout << "--- PHASE 2: DQN ---\n";
-    DQNAgent dqn_agent = Trainer::train_dqn(5000, true);
+    DQNAgent dqn_agent = Trainer::trainDQN(5000, true);
     GridWorld test_env_dqn(8);
-    Trainer::test_dqn_policy(dqn_agent, test_env_dqn, 10);
+    Trainer::testDQNPolicy(dqn_agent, test_env_dqn, 10);
 
     std::cout << "\n\n========================================\n";
     std::cout << "  Key Differences Summary\n";

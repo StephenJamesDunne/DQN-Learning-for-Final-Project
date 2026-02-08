@@ -9,11 +9,11 @@ int main() {
     std::cout << "========================================\n\n";
 
     // Train Q-Learning agent
-    QLearningAgent agent = Trainer::train_qlearning(2000, true);
+    QLearningAgent agent = Trainer::trainQLearning(2000, true);
 
     // Optionally test the learned policy
     GridWorld test_env(8);
-    Trainer::test_policy(agent, test_env, 10);
+    Trainer::testPolicy(agent, test_env, 10);
 
     std::cout << "\nPress Enter to exit...";
     std::cin.get();
